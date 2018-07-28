@@ -24,18 +24,36 @@ def viterbi(startp,transp,emitp,obs,states):
     :param states: 隐状态
     :return:
     '''
-    Vit = [{}]
+    Vit = []
+    result = []
     for i in range(0, len(obs)):
         statenode = {}
         for s in states:
             # t0,干旱
             if i == 0:
                 statenode[s] = startp[s]*emitp[s][obs[0]]
-                Vit.append(statenode)
             else:# t1,t2 ......
-                statenode[s] = startp[s]*emitp[s][obs[0]]
+                pre_state = Vit[i-1]
+
+                try:
+                    #ss = previous day
+                    temp = max([pre_state[ss]*transp[ss][s] for ss in states])
+                    statenode[s] = temp*emitp[s][obs[i]]
+                except TypeError as e:
+                    print(e)
+        Vit.append(statenode)
+
+    for V in Vit:
+        current_max_key = sorted(V,key=lambda x:V[x])[-1]
+        current_max_value = V[current_max_key]
+        result.append({current_max_key:current_max_value})
+
+
+    return result
 
 
 
 
 
+R = viterbi(startp,transp,emitp,obs,states)
+print(R)
