@@ -8,7 +8,10 @@
 from https://blog.csdn.net/tanswer_/article/details/52794335
 */
 #define MAXSIZE 100000
+#include <algorithm>
+#include <iostream>
 
+using namespace std;
 
 template <typename T>
 struct hNode {
@@ -22,7 +25,6 @@ struct hNode {
 };
 
 template <typename T>
-
 class HuffmanTree
 {
 public:
@@ -35,6 +37,7 @@ public:
 	void print(); //´òÓ¡Ê÷
 
 private:
+	void forest_sort(int size);
 	void preScan(hNode<T>* pnode);
 	void midScan(hNode<T>* pnode);
 	void postScan(hNode<T>* pnode);
