@@ -37,7 +37,7 @@ public:
 	void print(); //´òÓ¡Ê÷
 
 private:
-	void forest_sort(int size);
+	void forest_sort(int start,int size);
 	void preScan(hNode<T>* pnode);
 	void midScan(hNode<T>* pnode);
 	void postScan(hNode<T>* pnode);
