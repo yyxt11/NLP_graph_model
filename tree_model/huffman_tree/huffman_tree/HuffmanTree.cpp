@@ -1,5 +1,6 @@
 #include "HuffmanTree.h"
 
+
 template<typename T>
 void HuffmanTree<T>::forest_sort(int start,int size)
 {
@@ -8,7 +9,7 @@ void HuffmanTree<T>::forest_sort(int start,int size)
 	{
 		for (int j = i+1; j < start + size; j++)
 		{
-			if （forest[i]->weight > forest[j]->weight）
+			if (forest[i]->weight > forest[j]->weight)
 			{
 				swap(forest[i],forest[j]);
 			}
@@ -23,17 +24,19 @@ void HuffmanTree<T>::forest_sort(int start,int size)
 template<typename T>
 void HuffmanTree<T>::preScan()
 {
-
+	preScan(this->pnode);
 }
 
 template<typename T>
 void HuffmanTree<T>::midScan()
 {
+	midScan(this->pnode);
 }
 
 template<typename T>
 void HuffmanTree<T>::postScan()
 {
+	postScan(this->pnode);
 }
 
 template<typename T>
@@ -46,7 +49,7 @@ void HuffmanTree<T>::create(T a[], int size)
 		forest[i] = ph;
 	}
 
-	int window_s = 0;
+	int startp = 0;
 	int round = 0;
 
 	//选取其中权重最小的两个node
@@ -54,54 +57,126 @@ void HuffmanTree<T>::create(T a[], int size)
 	{	
 		
 		//重排序
-		forest_sort(window_s, size - round);
+		forest_sort(startp, size - round);
 
 		//找到最小的权重点
-		hNode<T> *node = new hNode<T>(forest[window_s]->weight + forest[window_s + 1]->weight, 
-									  forest[window_s], 
-									  forest[window_s + 1]);
-		forest[size+round] = node;
+		hNode<T> *node = new hNode<T>(forest[startp]->weight + forest[startp + 1]->weight,
+									  forest[startp],
+									  forest[startp + 1]);
+		forest[size + round] = node;
 
-		start += 2;
+		startp += 2;
 		round++;
 
 	}
 
-	pnode = forest[size + round - 1]
+	pnode = forest[size + round - 1];
 
 }
 
 template<typename T>
 void HuffmanTree<T>::destroy()
 {
+	if (pnode != NULL)
+	{
+		destroy(this->pnode);
+	}
 }
+
 
 template<typename T>
 void HuffmanTree<T>::print()
 {
+	print(this->pnode);
 }
 
 template<typename T>
 void HuffmanTree<T>::preScan(hNode<T>* pnode)
 {
+	if (pnode != NULL)
+	{
+		cout << "前序遍历当前节点：" << pnode->weight << ".";
+		preScan(pnode->lchild);
+		preScan(pnode->rchild);
+	}
+
 }
 
 template<typename T>
 void HuffmanTree<T>::midScan(hNode<T>* pnode)
 {
+	if (pnode != NULL)
+	{	
+		midScan(pnode->lchild);
+		cout << "中序遍历当前节点：" << pnode->weight << ".";
+		midScan(pnode->rchild);
+	}
+
 }
 
 template<typename T>
 void HuffmanTree<T>::postScan(hNode<T>* pnode)
 {
+	if (pnode != NULL)
+	{
+		postScan(pnode->lchild);
+		postScan(pnode->rchild);
+		cout << "后序遍历当前节点：" << pnode->weight << ".";
+	}
+
 }
 
 template<typename T>
 void HuffmanTree<T>::destroy(hNode<T>* pnode)
 {
+	if (pnode != NULL)
+	{
+		this->destroy(pnode->lchild);
+		this->destroy(pnode->rchild);
+		delete pnode;
+	}
 }
 
 template<typename T>
 void HuffmanTree<T>::print(hNode<T>* pnode)
 {
+	if (pnode != NULL)
+	{
+		cout << "当前节点权重：" << pnode->weight << ".";
+
+		if (pnode->lchild != NULL)
+		{
+			cout << "当前节点左孩子权重：" << pnode->lchild->weight << ".";
+		}
+		else 
+		{
+			cout << "当前结点无左孩子节点：" << pnode->lchild->weight << ".";
+		
+		}
+
+		if (pnode->rchild != NULL)
+		{
+			cout << "当前节点右孩子权重：" << pnode->rchild->weight << ".";
+		}
+		else
+		{
+			cout << "当前结点无右孩子节点：" << pnode->rchild->weight << ".";
+
+		}
+
+
+		
+	}
+}
+
+
+
+int main()
+{
+	HuffmanTree<int> HT;
+	int a[] = { 10,20,30,40 };
+	HT.create(a, 4);
+	HT.print();
+
+	system("pause");
 }

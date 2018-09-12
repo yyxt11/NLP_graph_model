@@ -15,7 +15,7 @@ using namespace std;
 
 template <typename T>
 struct hNode {
-	hNode(T w, hNode<T>* l, hNode<T>* r) :T(w), lchild(l), rchild(r), flag(0) {}
+	hNode(T w, hNode<T>* l, hNode<T>* r) :weight(w), lchild(l), rchild(r), flag(0) {}
 
 	T weight;
 	hNode<T>* lchild;
@@ -23,6 +23,7 @@ struct hNode {
 	int flag;
 
 };
+
 
 template <typename T>
 class HuffmanTree
