@@ -150,7 +150,7 @@ void HuffmanTree<T>::print(hNode<T>* pnode)
 		}
 		else 
 		{
-			cout << "当前结点无左孩子节点：" << pnode->lchild->weight << ".";
+			cout << "当前结点无左孩子节点：" ;
 		
 		}
 
@@ -160,10 +160,12 @@ void HuffmanTree<T>::print(hNode<T>* pnode)
 		}
 		else
 		{
-			cout << "当前结点无右孩子节点：" << pnode->rchild->weight << ".";
+			cout << "当前结点无右孩子节点：" ;
 
 		}
-
+		cout << endl;
+		print(pnode->lchild);
+		print(pnode->rchild);
 
 		
 	}
